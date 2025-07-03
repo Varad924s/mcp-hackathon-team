@@ -37,16 +37,16 @@ ServersConfig = [
     }
 
     # Commented out for now – enable later
-    # {
-    #     "server_name": "NUMPY_MCP",
-    #     "command": "uv",
-    #     "args": [
-    #         "--directory",
-    #         "../servers/NUMPY_MCP",
-    #         "run",
-    #         "server"
-    #     ]
-    # }
+    {
+        "server_name": "NUMPY_MCP",
+        "command": "uv",
+        "args": [
+            "--directory",
+            "../servers/NUMPY_MCP",
+            "run",
+            "server"
+        ]
+    }
     {
         "server_name": "MCP-SPINNAKER",
         "command": "uvicorn",
