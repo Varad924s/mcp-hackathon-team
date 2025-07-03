@@ -1,0 +1,100 @@
+[
+  {
+    "name": "run_simulation",
+    "description": "Run a simulation based on model type and material",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "model_type": { "type": "string" },
+        "material": { "type": "string" }
+      },
+      "required": ["model_type", "material"]
+    }
+  },
+  {
+    "name": "get_material_properties",
+    "description": "Returns density and elasticity of a material",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "material": { "type": "string" }
+      },
+      "required": ["material"]
+    }
+  },
+  {
+    "name": "list_available_models",
+    "description": "List all available simulation models",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "calculate_thermal_expansion",
+    "description": "Calculate change in length using ΔL = α × L × ΔT",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "L": { "type": "number" },
+        "alpha": { "type": "number" },
+        "delta_T": { "type": "number" }
+      },
+      "required": ["L", "alpha", "delta_T"]
+    }
+  },
+  {
+    "name": "run_batch_simulation",
+    "description": "Run multiple simulations in batch",
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "model_type": { "type": "string" },
+          "material": { "type": "string" }
+        },
+        "required": ["model_type", "material"]
+      }
+    }
+  },
+  {
+    "name": "load_analysis",
+    "description": "Calculate stress = Force / Area",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "force": { "type": "number" },
+        "area": { "type": "number" }
+      },
+      "required": ["force", "area"]
+    }
+  },
+  {
+    "name": "heat_transfer",
+    "description": "Calculate heat transfer Q = m × c × ΔT",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "m": { "type": "number" },
+        "c": { "type": "number" },
+        "delta_T": { "type": "number" }
+      },
+      "required": ["m", "c", "delta_T"]
+    }
+  },
+  {
+    "name": "summarize_results",
+    "description": "Summarize a list of simulation results",
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "temperature_K": { "type": "number" }
+        },
+        "required": ["temperature_K"]
+      }
+    }
+  }
+]
