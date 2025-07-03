@@ -32,4 +32,15 @@ ServersConfig = [
     #         "server"
     #     ]
     # }
+    {
+        "server_name": "MCP-SPINNAKER",
+        "command": "uvicorn",
+        "args": [
+            "--app-dir",
+            "../servers/MCP-SPINNAKER/mcp_spinnaker",
+            "main:app",
+            "--reload"
+        ]
+    }
+
 ]
