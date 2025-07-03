@@ -32,7 +32,8 @@ from mcp_spinnaker.models import ExecutionControlRequest, ExecutionControlRespon
 from mcp_spinnaker.models import ManualJudgmentRequest, ManualJudgmentResponse
 from mcp_spinnaker.models import PipelineConfigResponse
 from mcp_spinnaker.models import PipelineHistoryResponse
-
+from fastapi import Request
+from pydantic import BaseModel
 
 app = FastAPI(title="MCP-Spinnaker Server")
 
@@ -121,5 +122,38 @@ async def get_pipeline_history(application: str):
     try:
         result = await spinnaker_client.get_pipeline_history(application)
         return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
+class MessageRequest(BaseModel):
+    content: str
+
+@app.post("/process")
+async def process_message(request: MessageRequest):
+    try:
+        message = request.content.lower()
+
+        # Simple keyword-based action routing
+        if "deploy" in message and "user-service" in message:
+            result = await spinnaker_client.trigger_pipeline(
+                application="user-service",  # 🔁 use your actual application name
+                pipeline_name="deploy-prod",  # 🔁 pipeline name in Spinnaker
+                payload={"version": "3.1.2"}   # 🔁 payload required by Spinnaker
+            )
+            return {"action": "Triggered deployment", "ref": result.get("ref")}
+
+        elif "rollback" in message and "payment-service" in message:
+            result = await spinnaker_client.trigger_pipeline(
+                application="payment-service",
+                pipeline_name="rollback-prod",
+                payload={}
+            )
+            return {"action": "Triggered rollback", "ref": result.get("ref")}
+
+        else:
+            return {"message": f"No action matched for input: {request.content}"}
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

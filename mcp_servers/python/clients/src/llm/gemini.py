@@ -2,6 +2,8 @@ import requests
 import json
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field, asdict
+import google.generativeai as genai
+import os
 
 @dataclass
 class ChatMessage:
